@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>操作系统导论笔记+实操--1 | choppeer6的个人空间</title><meta name="author" content="choppeer6"><meta name="copyright" content="choppeer6"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="操作系统导论笔记+实操——1引言《操作系统导论》（Operating Systems: Three Easy Pieces, OSTEP）是操作系统领域的经典教材，它不仅理论讲解透彻，还配备了丰富的代码示例和实验。这本书提倡“学以致用”，因此配套的 p1.c 等用户态程序能帮助我们直观感受系统调用的行为。更进一步，MIT 的 xv6 教学系统则提供了一个迷你内核，让我们能深入操作系统内部，亲眼见证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统导论笔记+实操--1">
+<meta property="og:url" content="http://choppeer6.github.io/2026/03/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-%E5%AE%9E%E6%93%8D-1/index.html">
+<meta property="og:site_name" content="choppeer6的个人空间">
+<meta property="og:description" content="操作系统导论笔记+实操——1引言《操作系统导论》（Operating Systems: Three Easy Pieces, OSTEP）是操作系统领域的经典教材，它不仅理论讲解透彻，还配备了丰富的代码示例和实验。这本书提倡“学以致用”，因此配套的 p1.c 等用户态程序能帮助我们直观感受系统调用的行为。更进一步，MIT 的 xv6 教学系统则提供了一个迷你内核，让我们能深入操作系统内部，亲眼见证">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://choppeer6.github.io/img/head.jpg">
+<meta property="article:published_time" content="2026-03-11T07:30:47.000Z">
+<meta property="article:modified_time" content="2026-03-11T09:06:16.812Z">
+<meta property="article:author" content="choppeer6">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://choppeer6.github.io/img/head.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "操作系统导论笔记+实操--1",
+  "url": "http://choppeer6.github.io/2026/03/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-%E5%AE%9E%E6%93%8D-1/",
+  "image": "http://choppeer6.github.io/img/head.jpg",
+  "datePublished": "2026-03-11T07:30:47.000Z",
+  "dateModified": "2026-03-11T09:06:16.812Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "choppeer6",
+      "url": "http://choppeer6.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://choppeer6.github.io/2026/03/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-%E5%AE%9E%E6%93%8D-1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.3-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '操作系统导论笔记+实操--1',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/url(/img/back.png)%20center/cover%20no-repeat%20fixed%20rgba(0,0,0,0.9));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/choppeer6"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">choppeer6的个人空间</span></a><a class="nav-page-title" href="/"><span class="site-name">操作系统导论笔记+实操--1</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/choppeer6"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">操作系统导论笔记+实操--1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-11T07:30:47.000Z" title="发表于 2026-03-11 15:30:47">2026-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-11T09:06:16.812Z" title="更新于 2026-03-11 17:06:16">2026-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="操作系统导论笔记-实操——1"><a href="#操作系统导论笔记-实操——1" class="headerlink" title="操作系统导论笔记+实操——1"></a>操作系统导论笔记+实操——1</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>《操作系统导论》（Operating Systems: Three Easy Pieces, OSTEP）是操作系统领域的经典教材，它不仅理论讲解透彻，还配备了丰富的代码示例和实验。这本书提倡“学以致用”，因此配套的 <code>p1.c</code> 等用户态程序能帮助我们直观感受系统调用的行为。更进一步，MIT 的 <strong>xv6</strong> 教学系统则提供了一个迷你内核，让我们能深入操作系统内部，亲眼见证进程、内存、文件系统等抽象的实现。</p>
+<p>本文档将记录我从零开始学习 OSTEP 的实践过程，包括如何运行第一个示例程序，以及认识 xv6 这个宝贵的“实验田”。</p>
+<hr>
+<h2 id="第一部分：运行第一个程序-——-p1-c"><a href="#第一部分：运行第一个程序-——-p1-c" class="headerlink" title="第一部分：运行第一个程序 —— p1.c"></a>第一部分：运行第一个程序 —— p1.c</h2><h3 id="1-1-环境准备"><a href="#1-1-环境准备" class="headerlink" title="1.1 环境准备"></a>1.1 环境准备</h3><p>OSTEP 中的示例代码使用了 Linux 特有的系统调用（如 <code>fork()</code>），因此必须在 <strong>Linux 或类 UNIX 环境</strong>下运行。</p>
+<ul>
+<li><strong>Windows 用户</strong>：最简单的方式是安装 WSL（Windows Subsystem for Linux），例如 Ubuntu 20.04&#x2F;22.04。</li>
+<li><strong>macOS 用户</strong>：直接使用内置的终端即可，macOS 基于 UNIX，可以完美兼容。</li>
+<li><strong>Linux 用户</strong>：天生满足条件，直接打开终端。</li>
+</ul>
+<h3 id="1-2-获取官方代码"><a href="#1-2-获取官方代码" class="headerlink" title="1.2 获取官方代码"></a>1.2 获取官方代码</h3><p>OSTEP 的示例程序和作业都托管在 GitHub 上，使用 <code>git</code> 克隆到本地：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/remzi-arpacidusseau/ostep-code.git</span><br></pre></td></tr></table></figure>
+
+<p>进入包含 <code>p1.c</code> 的目录（通常在 <code>intro</code> 文件夹下）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ostep-code/intro</span><br></pre></td></tr></table></figure>
+
+<p>用 <code>ls</code> 或 <code>cat p1.c</code> 查看一下代码内容。<code>p1.c</code> 非常简短，主要演示 <code>fork()</code> 的基本用法。</p>
+<h3 id="1-3-编译与运行"><a href="#1-3-编译与运行" class="headerlink" title="1.3 编译与运行"></a>1.3 编译与运行</h3><p>使用 GCC 编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o p1 p1.c</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-o p1</code> 指定输出可执行文件名为 <code>p1</code>。</li>
+</ul>
+<p>运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./p1</span><br></pre></td></tr></table></figure>
+
+<p>示例输出可能如下（进程 ID 会变化）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hello (pid:29146)</span><br><span class="line">parent of 29147 (pid:29146)</span><br><span class="line">child (pid:29147)</span><br></pre></td></tr></table></figure>
+
+<p>或者由于调度顺序的不确定性，也可能是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hello (pid:29146)</span><br><span class="line">child (pid:29147)</span><br><span class="line">parent of 29147 (pid:29146)</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键观察</strong>：父进程和子进程的输出顺序无法预测，这正是操作系统调度多进程的体现。我们可以通过多次运行或修改代码（例如加入 <code>sleep()</code>）来加深理解。</p>
+<h3 id="1-4-动手修改"><a href="#1-4-动手修改" class="headerlink" title="1.4 动手修改"></a>1.4 动手修改</h3><p>可以尝试在子进程和父进程中分别添加不同的操作，例如使用 <code>wait()</code> 让父进程等待子进程结束，或者结合 <code>exec()</code> 运行一个新程序。这些修改会帮助我们更深入地理解进程控制原语。</p>
+<hr>
+<h2 id="第二部分：认识-xv6-——-理论与实践的结合"><a href="#第二部分：认识-xv6-——-理论与实践的结合" class="headerlink" title="第二部分：认识 xv6 —— 理论与实践的结合"></a>第二部分：认识 xv6 —— 理论与实践的结合</h2><h3 id="2-1-什么是-xv6？"><a href="#2-1-什么是-xv6？" class="headerlink" title="2.1 什么是 xv6？"></a>2.1 什么是 xv6？</h3><p>xv6 是麻省理工学院（MIT）开发的一个<strong>教学用操作系统内核</strong>，它基于早期 Unix 第六版（v6），用现代 C 语言重写，代码量仅一万行左右。它麻雀虽小五脏俱全，包含了进程、内存管理、文件系统、并发控制等核心模块，并且有一本配套的《xv6 手册》逐行解释代码。</p>
+<ul>
+<li><strong>与 OSTEP 的关系</strong>：OSTEP 是“理论”，讲解操作系统的基本原理；xv6 是“实践”，让我们能亲手修改和运行一个真正的内核，验证书中的概念。</li>
+</ul>
+<h3 id="2-2-我需要下载-xv6-吗？"><a href="#2-2-我需要下载-xv6-吗？" class="headerlink" title="2.2 我需要下载 xv6 吗？"></a>2.2 我需要下载 xv6 吗？</h3><p><strong>建议先不着急，学到关键章节时再动手。</strong> 当你在 OSTEP 中学习了进程调度、锁、文件系统实现等内容后，就可以打开 xv6 的源码，看看书中那些抽象是如何用代码实现的。</p>
+<p>如果你想现在就开始体验，可以按照下面的步骤搭建 xv6 实验环境。</p>
+<h3 id="2-3-下载并运行-xv6"><a href="#2-3-下载并运行-xv6" class="headerlink" title="2.3 下载并运行 xv6"></a>2.3 下载并运行 xv6</h3><ol>
+<li><p><strong>克隆仓库</strong>（以 RISC-V 版本为例，这是最新教学版）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/mit-pdos/xv6-riscv.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>安装模拟器 QEMU</strong>（用于运行 xv6）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu / WSL</span></span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install qemu-system</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>编译并启动 xv6</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> xv6-riscv</span><br><span class="line">make qemu</span><br></pre></td></tr></table></figure>
+
+<p>稍等片刻，你会看到一个终端界面，里面运行着一个迷你的 Unix 系统，可以输入 <code>ls</code> 等命令。</p>
+</li>
+</ol>
+<h3 id="2-4-xv6-能做什么？"><a href="#2-4-xv6-能做什么？" class="headerlink" title="2.4 xv6 能做什么？"></a>2.4 xv6 能做什么？</h3><ul>
+<li><p><strong>作为学习平台</strong>：你可以修改内核代码，比如增加一个新的系统调用、改变进程调度算法、实现信号量等。每次修改后重新 <code>make qemu</code>，观察效果。这是理解操作系统最有效的方式。</p>
+</li>
+<li><p><strong>作为真实系统</strong>：xv6 支持基本的 Unix 命令，你也可以编写自己的 C 程序，通过系统调用（如 <code>fork</code>, <code>exec</code>, <code>open</code>）与内核交互。</p>
+</li>
+<li><p><strong>作为探索游乐场</strong>：许多学生将 xv6 移植到真实硬件，甚至有人基于它开发商业产品（如 T6 安全内核）。它的简洁性让它成为系统编程和操作系统研究的绝佳起点。</p>
+</li>
+</ul>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>从运行一个简单的 <code>p1.c</code>，到进入 xv6 的内核世界，我们迈出了操作系统实践的第一步。后续我会继续记录学习过程中的笔记和实验心得，希望能与同样在学习 OSTEP 的你交流进步。</p>
+<p>Happy hacking!</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://choppeer6.github.io">choppeer6</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://choppeer6.github.io/2026/03/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-%E5%AE%9E%E6%93%8D-1/">http://choppeer6.github.io/2026/03/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-%E5%AE%9E%E6%93%8D-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://choppeer6.github.io" target="_blank">choppeer6的个人空间</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="post-share"><div class="social-share" data-image="/img/head.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/11/27/deepseek%E6%8E%A5%E5%85%A5/" title="deepseek接入"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">deepseek接入</div></div><div class="info-2"><div class="info-item-1">对话补全 | DeepSeek API Docs Curl1234567891011121314151617181920212223242526272829303132curl -L -X POST &#x27;https://api.deepseek.com/chat/completions&#x27; \-H &#x27;Content-Type: application/json&#x27; \-H &#x27;Accept: application/json&#x27; \-H &#x27;Authorization: Bearer sk-0d2a13acb80d427e935b2e7c43ffa8f4&#x27; \--data-raw &#x27;&#123;  &quot;messages&quot;: [    &#123;      &quot;content&quot;: &quot;You are a helpful assistant&quot;,      &quot;role&quot;: &quot;system&quot;    &#125;,  ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">choppeer6</div><div class="author-info-description">碎碎念念</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/choppeer6"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-%E5%AE%9E%E6%93%8D%E2%80%94%E2%80%941"><span class="toc-number">1.</span> <span class="toc-text">操作系统导论笔记+实操——1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%90%E8%A1%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F-%E2%80%94%E2%80%94-p1-c"><span class="toc-number">1.2.</span> <span class="toc-text">第一部分：运行第一个程序 —— p1.c</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%8E%B7%E5%8F%96%E5%AE%98%E6%96%B9%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 获取官方代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E7%BC%96%E8%AF%91%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.3 编译与运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%8A%A8%E6%89%8B%E4%BF%AE%E6%94%B9"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.4 动手修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E8%AE%A4%E8%AF%86-xv6-%E2%80%94%E2%80%94-%E7%90%86%E8%AE%BA%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%9A%84%E7%BB%93%E5%90%88"><span class="toc-number">1.3.</span> <span class="toc-text">第二部分：认识 xv6 —— 理论与实践的结合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AF-xv6%EF%BC%9F"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 什么是 xv6？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%88%91%E9%9C%80%E8%A6%81%E4%B8%8B%E8%BD%BD-xv6-%E5%90%97%EF%BC%9F"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 我需要下载 xv6 吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%B8%8B%E8%BD%BD%E5%B9%B6%E8%BF%90%E8%A1%8C-xv6"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 下载并运行 xv6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-xv6-%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.3.4.</span> <span class="toc-text">2.4 xv6 能做什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">1.4.</span> <span class="toc-text">结语</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0-%E5%AE%9E%E6%93%8D-1/" title="操作系统导论笔记+实操--1">操作系统导论笔记+实操--1</a><time datetime="2026-03-11T07:30:47.000Z" title="发表于 2026-03-11 15:30:47">2026-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/27/deepseek%E6%8E%A5%E5%85%A5/" title="deepseek接入">deepseek接入</a><time datetime="2025-11-27T11:03:54.000Z" title="发表于 2025-11-27 19:03:54">2025-11-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/27/Spring%E6%B3%A8%E8%A7%A3%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5/" title="Spring注解属性注入">Spring注解属性注入</a><time datetime="2025-11-27T01:56:29.000Z" title="发表于 2025-11-27 09:56:29">2025-11-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/19/%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6-1/" title="测试文件">测试文件</a><time datetime="2025-11-19T09:19:39.000Z" title="发表于 2025-11-19 17:19:39">2025-11-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/19/%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6/" title="测试文件">测试文件</a><time datetime="2025-11-19T08:54:29.000Z" title="发表于 2025-11-19 16:54:29">2025-11-19</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By choppeer6</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.3-b1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.3-b1"></script><script src="/js/main.js?v=5.5.3-b1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
