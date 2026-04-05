@@ -1,0 +1,547 @@
+/* =============================================
+   柔和晨光主题 - 明亮清新的配色方案
+   ============================================= */
+
+/* 主色调定义 */
+:root {
+  --accent-blue: #4a90d9;
+  --accent-purple: #9b59b6;
+  --bg-light: #f8fafc;
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --card-bg: rgba(255, 255, 255, 0.85);
+}
+
+/* =============================================
+   全局背景 - 柔和的浅蓝灰渐变
+   ============================================= */
+html, body {
+  background: linear-gradient(180deg, #f0f4f8 0%, #e8eef5 50%, #f8fafc 100%) !important;
+  background-attachment: fixed !important;
+  color: var(--text-primary) !important;
+}
+
+/* =============================================
+   首页头部背景 - 清新的紫粉渐变
+   ============================================= */
+#page-header.full_page,
+#page-header.full_page.fixed,
+#page-header.full_page.nav-fixed,
+body #page-header.full_page {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* 头部文字 */
+#page-header.full_page #site-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15), 0 0 40px rgba(255, 255, 255, 0.3) !important;
+  font-weight: 700 !important;
+  letter-spacing: 2px !important;
+}
+
+#page-header.full_page #site-subtitle {
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* =============================================
+   导航栏 - 浅色毛玻璃效果
+   ============================================= */
+#nav {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.05) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+#nav a,
+#nav .site-page,
+#nav .site-name {
+  color: var(--text-primary) !important;
+}
+
+#nav a:hover,
+#nav .site-page:hover {
+  color: var(--accent-purple) !important;
+}
+
+/* 首页头部导航栏 */
+#page-header.full_page #nav {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+#page-header.full_page #nav.show {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+}
+
+#page-header.full_page #nav.show a,
+#page-header.full_page #nav.show .site-name {
+  color: var(--text-primary) !important;
+}
+
+/* =============================================
+   侧边栏卡片 - 浅色系玻璃拟态
+   ============================================= */
+#aside-content .card-widget {
+  background: var(--card-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  border-radius: 16px !important;
+  color: var(--text-primary) !important;
+}
+
+#aside-content .card-widget:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15) !important;
+}
+
+/* =============================================
+   首页文章列表卡片 - 浅色系
+   ============================================= */
+.recent-post-item {
+  background: var(--card-bg) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+}
+
+.recent-post-item:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.12) !important;
+}
+
+.recent-post-item .article-title {
+  color: var(--text-primary) !important;
+}
+
+.recent-post-item .article-title:hover {
+  color: var(--accent-purple) !important;
+}
+
+.recent-post-item .article-meta-wrap,
+.recent-post-item .content {
+  color: var(--text-secondary) !important;
+}
+
+/* =============================================
+   文章页内容区域
+   ============================================= */
+#post {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+#article-container h1,
+#article-container h2 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+#article-container h3,
+#article-container h4 {
+  color: var(--accent-blue) !important;
+}
+
+#article-container p,
+#article-container li {
+  color: var(--text-secondary) !important;
+  line-height: 1.9 !important;
+}
+
+/* =============================================
+   页脚 - 柔和的深色
+   ============================================= */
+#footer {
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+#footer a {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+#footer a:hover {
+  color: #f093fb !important;
+}
+
+/* =============================================
+   背景容器
+   ============================================= */
+#web_bg {
+  background: linear-gradient(180deg, #f0f4f8 0%, #e8eef5 50%, #f8fafc 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* =============================================
+   分页按钮
+   ============================================= */
+.pagination .page-number.current {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35) !important;
+}
+
+/* =============================================
+   按钮和交互元素
+   ============================================= */
+#rightside .to-top,
+#rightside .rightside-config-item {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: var(--accent-blue) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+#rightside .to-top:hover,
+#rightside .rightside-config-item:hover {
+  transform: scale(1.1) translateY(-2px) !important;
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.25) !important;
+  color: var(--accent-purple) !important;
+}
+
+/* =============================================
+   滚动条 - 清新配色
+   ============================================= */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #764ba2, #f093fb);
+}
+
+/* =============================================
+   代码块 - 北极冰川双模式主题
+   ============================================= */
+
+/* 日间模式代码块 - 明亮清新 */
+figure.highlight,
+.highlight-wrap {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  background: #fafbfc !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  overflow: hidden !important;
+}
+
+/* 代码块头部工具栏 */
+figure.highlight .highlight-tools,
+.highlight-wrap .highlight-tools {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  padding: 12px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Mac风格按钮 */
+figure.highlight .highlight-tools::before,
+.highlight-wrap .highlight-tools::before {
+  content: '' !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  background: #ff5f56 !important;
+  box-shadow: 20px 0 #ffbd2e, 40px 0 #27c93f !important;
+  margin-right: 50px !important;
+}
+
+/* 代码区域 */
+figure.highlight pre,
+figure.highlight table,
+.highlight-wrap pre {
+  background: #fafbfc !important;
+  color: #2d3748 !important;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+/* 代码内容区域 */
+figure.highlight td.code,
+figure.highlight .code {
+  padding: 20px !important;
+}
+
+/* 行号 */
+figure.highlight td.gutter,
+figure.highlight .gutter {
+  background: #f1f5f9 !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.06) !important;
+  color: #94a3b8 !important;
+  padding: 20px 15px !important;
+  text-align: center !important;
+  user-select: none !important;
+}
+
+figure.highlight td.gutter pre,
+figure.highlight .gutter pre {
+  color: #94a3b8 !important;
+  background: transparent !important;
+}
+
+/* 日间模式语法高亮颜色 */
+figure.highlight .comment,
+figure.highlight .quote { color: #6b7280 !important; font-style: italic !important; }
+
+figure.highlight .keyword,
+figure.highlight .selector-tag,
+figure.highlight .subst { color: #d73a49 !important; font-weight: 600 !important; }
+
+figure.highlight .string,
+figure.highlight .title,
+figure.highlight .section,
+figure.highlight .attribute,
+figure.highlight .literal,
+figure.highlight .template-tag,
+figure.highlight .template-variable,
+figure.highlight .type,
+figure.highlight .addition { color: #032f62 !important; }
+
+figure.highlight .number,
+figure.highlight .meta,
+figure.highlight .built_in,
+figure.highlight .builtin-name,
+figure.highlight .literal,
+figure.highlight .variable,
+figure.highlight .template-variable,
+figure.highlight .tag .attr { color: #005cc5 !important; }
+
+figure.highlight .function,
+figure.highlight .name,
+figure.highlight .tag { color: #6f42c1 !important; }
+
+figure.highlight .params { color: #e36209 !important; }
+
+/* =============================================
+   夜间模式代码块 - 深邃极光
+   ============================================= */
+[data-theme="dark"] figure.highlight,
+[data-theme="dark"] .highlight-wrap {
+  background: #0d1117 !important;
+  border: 1px solid rgba(48, 54, 61, 0.6) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.1) !important;
+}
+
+[data-theme="dark"] figure.highlight .highlight-tools,
+[data-theme="dark"] .highlight-wrap .highlight-tools {
+  background: linear-gradient(135deg, #161b22 0%, #0d1117 100%) !important;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.6) !important;
+}
+
+[data-theme="dark"] figure.highlight pre,
+[data-theme="dark"] figure.highlight table,
+[data-theme="dark"] .highlight-wrap pre {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+}
+
+[data-theme="dark"] figure.highlight td.gutter,
+[data-theme="dark"] figure.highlight .gutter {
+  background: #161b22 !important;
+  border-right: 1px solid rgba(48, 54, 61, 0.6) !important;
+  color: #6e7681 !important;
+}
+
+[data-theme="dark"] figure.highlight td.gutter pre,
+[data-theme="dark"] figure.highlight .gutter pre {
+  color: #6e7681 !important;
+  background: transparent !important;
+}
+
+/* 夜间模式语法高亮颜色 */
+[data-theme="dark"] figure.highlight .comment,
+[data-theme="dark"] figure.highlight .quote { color: #8b949e !important; font-style: italic !important; }
+
+[data-theme="dark"] figure.highlight .keyword,
+[data-theme="dark"] figure.highlight .selector-tag,
+[data-theme="dark"] figure.highlight .subst { color: #ff7b72 !important; font-weight: 600 !important; }
+
+[data-theme="dark"] figure.highlight .string,
+[data-theme="dark"] figure.highlight .title,
+[data-theme="dark"] figure.highlight .section,
+[data-theme="dark"] figure.highlight .attribute,
+[data-theme="dark"] figure.highlight .literal,
+[data-theme="dark"] figure.highlight .template-tag,
+[data-theme="dark"] figure.highlight .template-variable,
+[data-theme="dark"] figure.highlight .type,
+[data-theme="dark"] figure.highlight .addition { color: #a5d6ff !important; }
+
+[data-theme="dark"] figure.highlight .number,
+[data-theme="dark"] figure.highlight .meta,
+[data-theme="dark"] figure.highlight .built_in,
+[data-theme="dark"] figure.highlight .builtin-name,
+[data-theme="dark"] figure.highlight .literal,
+[data-theme="dark"] figure.highlight .variable,
+[data-theme="dark"] figure.highlight .tag .attr { color: #79c0ff !important; }
+
+[data-theme="dark"] figure.highlight .function,
+[data-theme="dark"] figure.highlight .name,
+[data-theme="dark"] figure.highlight .tag { color: #d2a8ff !important; }
+
+[data-theme="dark"] figure.highlight .params { color: #ffa657 !important; }
+
+/* =============================================
+   行内代码
+   ============================================= */
+#article-container code:not(pre code) {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #667eea !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+  font-size: 0.9em !important;
+  border: 1px solid rgba(102, 126, 234, 0.2) !important;
+}
+
+[data-theme="dark"] #article-container code:not(pre code) {
+  background: rgba(139, 92, 246, 0.15) !important;
+  color: #c084fc !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+}
+
+/* =============================================
+   目录 TOC - 双模式清晰样式
+   ============================================= */
+
+/* 日间模式目录 */
+#aside-content #card-toc {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 16px !important;
+}
+
+#aside-content #card-toc .item-headline {
+  color: var(--text-primary) !important;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.2) !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 12px !important;
+}
+
+/* 目录内容区域 */
+.toc-content {
+  background: transparent !important;
+}
+
+.toc-content .toc-list {
+  padding-left: 0 !important;
+}
+
+.toc-content .toc-list-item {
+  margin: 4px 0 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.toc-content .toc-list-item:hover {
+  background: rgba(102, 126, 234, 0.08) !important;
+}
+
+/* 目录链接 */
+.toc-content .toc-link {
+  color: var(--text-secondary) !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  display: block !important;
+  transition: all 0.3s ease !important;
+  border-left: 3px solid transparent !important;
+}
+
+.toc-content .toc-link:hover {
+  color: var(--accent-purple) !important;
+  background: rgba(102, 126, 234, 0.1) !important;
+  border-left-color: var(--accent-purple) !important;
+  padding-left: 16px !important;
+}
+
+/* 当前活跃目录项 */
+.toc-content .toc-link.active {
+  color: var(--accent-purple) !important;
+  background: rgba(102, 126, 234, 0.12) !important;
+  border-left-color: var(--accent-purple) !important;
+  font-weight: 600 !important;
+  padding-left: 16px !important;
+}
+
+/* 子目录 */
+.toc-content .toc-list .toc-list {
+  padding-left: 16px !important;
+  border-left: 2px solid rgba(102, 126, 234, 0.1) !important;
+  margin-left: 12px !important;
+}
+
+/* =============================================
+   深色模式目录
+   ============================================= */
+[data-theme="dark"] #aside-content #card-toc {
+  background: rgba(30, 30, 45, 0.95) !important;
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(139, 92, 246, 0.1) !important;
+}
+
+[data-theme="dark"] #aside-content #card-toc .item-headline {
+  color: #e2e8f0 !important;
+  border-bottom-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+[data-theme="dark"] .toc-content .toc-link {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .toc-content .toc-link:hover {
+  color: #c084fc !important;
+  background: rgba(139, 92, 246, 0.15) !important;
+  border-left-color: #c084fc !important;
+}
+
+[data-theme="dark"] .toc-content .toc-link.active {
+  color: #c084fc !important;
+  background: rgba(139, 92, 246, 0.2) !important;
+  border-left-color: #c084fc !important;
+}
+
+[data-theme="dark"] .toc-content .toc-list .toc-list {
+  border-left-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+/* 移动端目录 */
+#toc-div {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-theme="dark"] #toc-div {
+  background: rgba(25, 25, 35, 0.98) !important;
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4) !important;
+}
